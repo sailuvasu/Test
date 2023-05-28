@@ -1,5 +1,6 @@
 package pageEvents;
 
+import Test.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,8 +12,10 @@ import utils.publicVariables;
 
 import java.io.IOException;
 
-public class LoginPage {
-    WebDriver driver;
+public class LoginPage extends BaseTest {
+    public LoginPage(WebDriver driver) {
+        super(driver);
+    }
 
     @FindBy(xpath = "//div/input[@name='login']")
     public static WebElement Login_username;
@@ -31,26 +34,22 @@ public class LoginPage {
     @FindBy(xpath = "//li/a[text()='Profile']")
     public static WebElement profile;
 
-    public LoginPage(WebDriver driver) throws IOException {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
 
+    public void login() throws IOException {
+        Login_username.sendKeys(publicVariables.username);
+        Login_Password.sendKeys(ExcelConnection.getData("password"));
+        Login_submit.click();
+        GenericMethods.waitForElement(driver, CarImage, "Home page ");
+        GenericMethods.waitForElement(driver, profile, "profile page ");
+        Reporting.addScreenshotToReport("PASS", "Logged in Successfully", driver);
     }
-        public void login() throws IOException {
-            Login_username.sendKeys(publicVariables.username);
-            Login_Password.sendKeys(ExcelConnection.getData("password"));
-            Login_submit.click();
-            GenericMethods.waitForElement(driver, CarImage,"Home page ");
-            GenericMethods.waitForElement(driver, profile,"profile page ");
-            Reporting.addScreenshotToReport("PASS", "Logged in Successfully", driver);
-        }
 
     public void logout() throws IOException {
-        GenericMethods.waitForElement(driver,logout,"logout button");
-        GenericMethods.javaScriptClick(driver,logout,"logout");
-        GenericMethods.waitForElement(driver,Login_submit,"Home Page");
+        GenericMethods.waitForElement(driver, logout, "logout button");
+        GenericMethods.javaScriptClick(driver, logout, "logout");
+        GenericMethods.waitForElement(driver, Login_submit, "Home Page");
         Reporting.addScreenshotToReport("PASS", "Logged out in Successfully", driver);
     }
 
-    }
+}
 

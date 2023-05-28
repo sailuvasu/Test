@@ -1,5 +1,6 @@
 package pageEvents;
 
+import Test.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,8 +12,10 @@ import utils.publicVariables;
 
 import java.io.IOException;
 
-public class SaveProfile {
-    WebDriver driver;
+public class SaveProfile extends BaseTest {
+    public SaveProfile(WebDriver driver) {
+        super(driver);
+    }
 
     //profile Info
     @FindBy(xpath = "//li/a[text()='Profile']")
@@ -57,23 +60,19 @@ public class SaveProfile {
     @FindBy(xpath = "//div[contains(text(),'The profile has been saved successful')]")
     public static WebElement profile_saveMessage;
 
-    public SaveProfile(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
 
     public void enterAndSaveInfo() throws IOException {
-        GenericMethods.waitForElement(driver,profile,"Profile page ");
-        GenericMethods.javaScriptClick(driver,profile,"Profile");
-        GenericMethods.waitForElement(driver,profile_basic,"Basic details ");
-        GenericMethods.waitForElement(driver,profile_addInfo1,"Additional Info1 ");
+        GenericMethods.waitForElement(driver, profile, "Profile page ");
+        GenericMethods.javaScriptClick(driver, profile, "Profile");
+        GenericMethods.waitForElement(driver, profile_basic, "Basic details ");
+        GenericMethods.waitForElement(driver, profile_addInfo1, "Additional Info1 ");
         profile_gender.sendKeys(ExcelConnection.getData("gender"));
         profile_age.sendKeys(ExcelConnection.getData("age"));
         profile_address.sendKeys(ExcelConnection.getData("address"));
         profile_phone.sendKeys(ExcelConnection.getData("phone"));
         profile_hobby.sendKeys(ExcelConnection.getData("hobby"));
-        GenericMethods.waitForElement(driver,profile_addInfo2,"Additional Info2");
-        Reporting.addScreenshotToReport("PASS","Entered User Details Successfully",driver);
+        GenericMethods.waitForElement(driver, profile_addInfo2, "Additional Info2");
+        Reporting.addScreenshotToReport("PASS", "Entered User Details Successfully", driver);
         profile_save.click();
         GenericMethods.softAssert(profile_saveMessage.getText(), publicVariables.profileSaveMessage);
 

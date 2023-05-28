@@ -1,3 +1,6 @@
+package utils;
+
+import Test.BaseTest;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -6,7 +9,6 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.annotations.ITestAnnotation;
-import utils.Retry;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,20 +30,18 @@ public class SuiteListeners implements ITestListener, IAnnotationTransformer {
     @Override
     public void onTestFailure(ITestResult result) {
 
-        TakesScreenshot ts=(TakesScreenshot) config.driver;
+        TakesScreenshot ts = (TakesScreenshot) BaseTest.driver;
 
-        File src=ts.getScreenshotAs(OutputType.FILE);
+        File src = ts.getScreenshotAs(OutputType.FILE);
 
-        String path=System.getProperty("user.dir")+"/screenshots/"+result.getMethod().getMethodName()+".jpg";
+        String path = System.getProperty("user.dir") + "/screenshots/" + result.getMethod().getMethodName() + ".jpg";
 
-        File destination=new File(path);
+        File destination = new File(path);
 
-        try
-        {
+        try {
             FileUtils.copyFile(src, destination);
-        } catch (IOException e)
-        {
-            System.out.println("Capture Failed "+e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Capture Failed " + e.getMessage());
         }
     }
 

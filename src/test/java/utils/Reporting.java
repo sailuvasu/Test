@@ -20,11 +20,11 @@ public class Reporting {
     public static ExtentTest logger;
     public static ExtentReports extent;
     public static ExtentHtmlReporter htmlReporter;
-    public static String reportPath = System.getProperty("user.dir")+ File.separator + "reports" + File.separator + "AutomationReport.html";
+    public static String reportPath = System.getProperty("user.dir") + File.separator + "reports" + File.separator + "AutomationReport.html";
 
     static Logger log = Logger.getLogger(Reporting.class.getName());
 
-    public static void startReporting(){
+    public static void startReporting() {
 
         htmlReporter = new ExtentHtmlReporter(reportPath);
         htmlReporter.config().setEncoding("uft-8");
@@ -33,21 +33,21 @@ public class Reporting {
         htmlReporter.config().setTheme(Theme.DARK);
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
-        extent.setSystemInfo("Automation Tester","Sailaja Vasupalli");
-   }
+        extent.setSystemInfo("Automation Tester", "Sailaja Vasupalli");
+    }
 
-    public static void addScreenshotToReport(String status, String desc,WebDriver driver) throws IOException {
-        switch(status.toUpperCase()){
-            case "PASS" :
-                    String temp= Screenshot.getScreenshot(driver);
-                    logger.pass(desc+": Screenshot",MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
-                    break;
+    public static void addScreenshotToReport(String status, String desc, WebDriver driver) throws IOException {
+        switch (status.toUpperCase()) {
+            case "PASS":
+                String temp = Screenshot.getScreenshot(driver);
+                logger.pass(desc + ": Screenshot", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+                break;
 
 
-            case "FAIL"   :
-        String temp1= Screenshot.getScreenshot(driver);
+            case "FAIL":
+                String temp1 = Screenshot.getScreenshot(driver);
 
-        Reporting.logger.fail(desc, MediaEntityBuilder.createScreenCaptureFromPath(temp1).build());
+                Reporting.logger.fail(desc, MediaEntityBuilder.createScreenCaptureFromPath(temp1).build());
                 break;
 
         }
@@ -68,10 +68,10 @@ public class Reporting {
         }
     }
 
-    public static void endReporting(){
+    public static void endReporting() {
         extent.flush();
-        extent=null;
-        htmlReporter=null;
+        extent = null;
+        htmlReporter = null;
     }
 
 

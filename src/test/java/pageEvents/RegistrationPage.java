@@ -1,6 +1,7 @@
 package pageEvents;
 
 
+import Test.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,8 +11,11 @@ import utils.*;
 
 import java.io.IOException;
 
-public class RegistrationPage  {
-    WebDriver driver;
+public class RegistrationPage extends BaseTest {
+    public RegistrationPage(WebDriver driver) {
+        super(driver);
+    }
+
     long currentTimeMillis = System.currentTimeMillis();
 
     @FindBy(xpath = "//a[text()='Register']")
@@ -39,28 +43,25 @@ public class RegistrationPage  {
 
     @FindBy(xpath = "//a/img[@title='Guilia Quadrifoglio']")
     public static WebElement CarImage;
-    public RegistrationPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
+
     static Logger log = Logger.getLogger(RegistrationPage.class.getName());
 
     public void LaunchApplication() throws InterruptedException, IOException {
 
-            GenericMethods.waitForElement(driver, CarImage,"Application loaded Successfully");
-            GenericMethods.softAssert(driver.getTitle(), publicVariables.title);
-            Reporting.writeToReport("PASS", "Application Launched Successfully");
+        GenericMethods.waitForElement(driver, CarImage, "Application loaded Successfully");
+        GenericMethods.softAssert(driver.getTitle(), publicVariables.title);
+        Reporting.writeToReport("PASS", "Application Launched Successfully");
 
     }
 
-    public  void Register() throws InterruptedException, IOException {
+    public void Register() throws InterruptedException, IOException {
 
 
         GenericMethods.waitToProceed(2000);
-        GenericMethods.javaScriptClick(driver, Register,"Register");
-        GenericMethods.waitForElement(driver, validateRegister,"Navigated to Registration page ");
+        GenericMethods.javaScriptClick(driver, Register, "Register");
+        GenericMethods.waitForElement(driver, validateRegister, "Navigated to Registration page ");
         GenericMethods.softAssert(validateRegister.getText(), publicVariables.registerPageHeader);
-         publicVariables.username = ExcelConnection.getData("login") + currentTimeMillis;
+        publicVariables.username = ExcelConnection.getData("login") + currentTimeMillis;
         Register_username.sendKeys(publicVariables.username);
         Register_firstname.sendKeys(ExcelConnection.getData("firstName"));
         Register_lastName.sendKeys(ExcelConnection.getData("lastName"));
@@ -68,10 +69,11 @@ public class RegistrationPage  {
         Register_confirmPassword.sendKeys(ExcelConnection.getData("password"));
         Reporting.writeToReport("INFO", "User details entered in Registration page");
         Register_submit.click();
-        GenericMethods.waitForElement(driver, Register_SuccessfullMessage,"Registration Success Message");
+        GenericMethods.waitForElement(driver, Register_SuccessfullMessage, "Registration Success Message");
         GenericMethods.softAssert(Register_SuccessfullMessage.getText(), publicVariables.registerSuccessfulMessage);
-        Reporting.addScreenshotToReport("PASS", "Registration successful :"+publicVariables.username+" username is created", driver);
+        Reporting.addScreenshotToReport("PASS", "Registration successful :" + publicVariables.username + " username is created", driver);
     }
+
     public void navigateToHomePage() throws IOException {
         homePage.click();
         GenericMethods.waitForElement(driver, CarImage, "Home Page ");

@@ -10,21 +10,18 @@ import java.io.IOException;
 
 public class Screenshot {
 
-    public static String getScreenshot(WebDriver driver)
-    {
-        TakesScreenshot ts=(TakesScreenshot) driver;
+    public static String getScreenshot(WebDriver driver) {
+        TakesScreenshot ts = (TakesScreenshot) driver;
 
-        File src=ts.getScreenshotAs(OutputType.FILE);
-        String path=System.getProperty("user.dir")+File.separator+"screenshots"+File.separator+System.currentTimeMillis()+".png";
+        File src = ts.getScreenshotAs(OutputType.FILE);
+        String path = System.getProperty("user.dir") + File.separator + "screenshots" + File.separator + System.currentTimeMillis() + ".png";
 
-        File destination=new File(path);
+        File destination = new File(path);
 
-        try
-        {
+        try {
             FileUtils.copyFile(src, destination);
-        } catch (IOException e)
-        {
-            System.out.println("Capture Failed "+e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Capture Failed " + e.getMessage());
         }
 
         return path;

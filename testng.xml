@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name= "Suite">
+<suite name="Suite">
     <listeners>
-        <listener class-name="SuiteListeners"/>
+        <listener class-name="utils.SuiteListeners"/>
     </listeners>
     <test name="Critical Scenarios">
 
         <classes>
-            <class name="testCases"/>
+            <class name="Test.testCases"/>
         </classes>
     </test> <!-- Test -->
 </suite> <!-- Suite -->
