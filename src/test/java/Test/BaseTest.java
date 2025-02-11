@@ -91,6 +91,7 @@ public class BaseTest {
             driver.get(publicVariables.url);
 
 
+
         }
     }
 
